@@ -1,0 +1,612 @@
+FORMAT: 1A
+HOST: https://dev-test-apigateway.payfirma.com/transaction-service
+
+# Payfirma Transaction Service
+
+Transactions represent customer payments, Payfirma transaction service support merchant to process the following transactions:
+* Create a sale transaction using payment information directly or through customer vault
+* Make an authorization transaction without actually charging customer
+* Capture the funds that are owed to merchant transferred from the customer’s account to the merchant’s account 
+* Refund a settled transaction to return full or partial funds to the customer
+* Refund directly to a provided credit card without settled transaction (naked refund)
+* Create a transaction using payment information
+* Find a transaction, or search for transactions that match specific criteria
+
+In the sections below, you will find detailed information for each end point Payfirma transaction service supports.
+
+## Sale [/sale]
+
+### Sale Transaction using Card [POST /sale]
+
+Create a sale transaction using provided card information
+
++ Request Making a sale transaction providing only card information (application/json)
+    + Headers
+
+            Authorization: Bearer eyJhbGciOiJIUzI1NiJ9.eyJhY2Nlc3NfdG9rZW4iOiIxM2EyN2ViZS1iZTEwLTQzY2ItYjFmOC1lYjY4ZWEwOGFlNGIiLCJleHAiOjE0NTcwNTU0NjN9._KIfokRmM38MjP-q2pxB6Lk_-dcg2VnLg9QiuwksxKU
+
+    + Attributes (AMOUNT_WITH_CARD)
+
++ Response 200 (application/json)
+
+    + Attributes (TRANSACTION_RESPONSE)
+
++ Response 400 (application/json)
+
+    Bad Request: Returned when the request is missing required information or having incorrect information
+    
+    + Attributes (BAD_REQUEST_RESPONSE)
+
++ Response 401 (application/json)
+
+    Unauthorized: Returned when Authorization header contains an invalid token or invalid client creditials provided
+    
+    + Attributes (UNAUTHORIZED_RESPONSE)
+
++ Response 404 (application/json)
+
+    Not Found:
+    
+    + Attributes (NOT_FOUND_RESPONSE)
+
++ Response 405 (application/json)
+
+    Method Not Allowed: Returned when a NON-POST method is used for the request, e.g GET
+    
+    + Attributes (METHOD_NOT_ALLOWED_RESPONSE)
+
+
++ Request Making a sale providing both card information and meta data (application/json)
+    + Headers
+
+            Authorization: Bearer eyJhbGciOiJIUzI1NiJ9.eyJhY2Nlc3NfdG9rZW4iOiIxM2EyN2ViZS1iZTEwLTQzY2ItYjFmOC1lYjY4ZWEwOGFlNGIiLCJleHAiOjE0NTcwNTU0NjN9._KIfokRmM38MjP-q2pxB6Lk_-dcg2VnLg9QiuwksxKU
+
+    + Attributes (AMOUNT_WITH_CARD_AND_METADATA)
+
++ Response 200 (application/json)
+
+    + Attributes (TRANSACTION_RESPONSE_WITH_METADATA)
+    
+### Sale Transaction using Customer Vault [POST /sale/customer/{customerLookupId}]
+
+Create a sale transaction using saved customer vault information
+
++ Parameters
+    + customerLookupId: 171336 (number, required) - Customer ID from Customer Vault
+    
++ Request Making a sale using existing customer vault information (application/json)
+    + Headers
+
+            Authorization: Bearer eyJhbGciOiJIUzI1NiJ9.eyJhY2Nlc3NfdG9rZW4iOiIxM2EyN2ViZS1iZTEwLTQzY2ItYjFmOC1lYjY4ZWEwOGFlNGIiLCJleHAiOjE0NTcwNTU0NjN9._KIfokRmM38MjP-q2pxB6Lk_-dcg2VnLg9QiuwksxKU
+   
+    + Attributes (AMOUNT)
+
+
++ Response 200 (application/json)
+
+    + Attributes (TRANSACTION_RESPONSE_WITH_METADATA)
+
+    
++ Request Making a sale transaction providing card information and existing customer vault information (application/json)
+    + Headers
+
+            Authorization: Bearer eyJhbGciOiJIUzI1NiJ9.eyJhY2Nlc3NfdG9rZW4iOiIxM2EyN2ViZS1iZTEwLTQzY2ItYjFmOC1lYjY4ZWEwOGFlNGIiLCJleHAiOjE0NTcwNTU0NjN9._KIfokRmM38MjP-q2pxB6Lk_-dcg2VnLg9QiuwksxKU
+   
+    + Attributes (AMOUNT_WITH_CARD)
+        
++ Response 200 (application/json)
+
+    + Attributes (TRANSACTION_RESPONSE_WITH_CARD)        
+
++ Request Making a sale transaction providing card information and existing customer vault information with meta data (application/json)
+    + Headers
+
+            Authorization: Bearer eyJhbGciOiJIUzI1NiJ9.eyJhY2Nlc3NfdG9rZW4iOiIxM2EyN2ViZS1iZTEwLTQzY2ItYjFmOC1lYjY4ZWEwOGFlNGIiLCJleHAiOjE0NTcwNTU0NjN9._KIfokRmM38MjP-q2pxB6Lk_-dcg2VnLg9QiuwksxKU
+   
+    + Attributes (AMOUNT_WITH_CARD_AND_METADATA)
+
++ Response 200 (application/json)
+
+    + Attributes (TRANSACTION_RESPONSE_WITH_METADATA)
+    
+    
+### Sale Transaction using Saved Card [POST /sale/customer/{customerLookupId}/card/{cardLookupId}]
+
+Create a sale transaction using saved payment information
+
++ Parameters
+    + customerLookupId: 171336 (number, required) - Customer ID from Customer Vault
+    + cardLookupId: Nlc3NfdG9rZ (string, required) - Credit card Lookup ID from Customer Vault
+
++ Request Make a sale transaction using saved card in customer vault  (application/json)
+    + Headers
+
+            Authorization: Bearer eyJhbGciOiJIUzI1NiJ9.eyJhY2Nlc3NfdG9rZW4iOiIxM2EyN2ViZS1iZTEwLTQzY2ItYjFmOC1lYjY4ZWEwOGFlNGIiLCJleHAiOjE0NTcwNTU0NjN9._KIfokRmM38MjP-q2pxB6Lk_-dcg2VnLg9QiuwksxKU
+            
+    + Attributes (AMOUNT)
+            
++ Response 200 (application/json)
+
+    + Attributes (TRANSACTION_RESPONSE_WITH_CARD)
+
+
+## Authorize [/authorize]
+
+
+### Authorization Transaction using Card [POST /authorize]
+
+Create a authorization transaction using provided payment information
+
++ Request Making an authorization with only card information (application/json)
+    + Headers
+
+            Authorization: Bearer eyJhbGciOiJIUzI1NiJ9.eyJhY2Nlc3NfdG9rZW4iOiIxM2EyN2ViZS1iZTEwLTQzY2ItYjFmOC1lYjY4ZWEwOGFlNGIiLCJleHAiOjE0NTcwNTU0NjN9._KIfokRmM38MjP-q2pxB6Lk_-dcg2VnLg9QiuwksxKU
+
+    + Attributes (AMOUNT_WITH_CARD)
+
++ Response 200 (application/json)
+
+    + Attributes (TRANSACTION_RESPONSE)
+
++ Request Making an authorization providing both card information and meta data (application/json)
+    + Headers
+
+            Authorization: Bearer eyJhbGciOiJIUzI1NiJ9.eyJhY2Nlc3NfdG9rZW4iOiIxM2EyN2ViZS1iZTEwLTQzY2ItYjFmOC1lYjY4ZWEwOGFlNGIiLCJleHAiOjE0NTcwNTU0NjN9._KIfokRmM38MjP-q2pxB6Lk_-dcg2VnLg9QiuwksxKU
+
+    + Attributes (AMOUNT_WITH_CARD_AND_METADATA)
+
++ Response 200 (application/json)
+
+    + Attributes (TRANSACTION_RESPONSE_WITH_METADATA)
+    
+### Authorization Transaction using Customer Vault [POST /authorize/customer/{customerLookupId}]
+
+Create a authorization transaction using saved customer vault information
+
++ Parameters
+    + customerLookupId: 171336 (number, required) - Customer ID from Customer Vault
+    
++ Request Making an authorization using existing customer vault information (application/json)
+    + Headers
+
+            Authorization: Bearer eyJhbGciOiJIUzI1NiJ9.eyJhY2Nlc3NfdG9rZW4iOiIxM2EyN2ViZS1iZTEwLTQzY2ItYjFmOC1lYjY4ZWEwOGFlNGIiLCJleHAiOjE0NTcwNTU0NjN9._KIfokRmM38MjP-q2pxB6Lk_-dcg2VnLg9QiuwksxKU
+   
+    + Attributes (AMOUNT)
+
+
++ Response 200 (application/json)
+
+    + Attributes (TRANSACTION_RESPONSE_WITH_METADATA)
+
+    
++ Request Making an authorization transaction providing card information and existing customer vault information (application/json)
+    + Headers
+
+            Authorization: Bearer eyJhbGciOiJIUzI1NiJ9.eyJhY2Nlc3NfdG9rZW4iOiIxM2EyN2ViZS1iZTEwLTQzY2ItYjFmOC1lYjY4ZWEwOGFlNGIiLCJleHAiOjE0NTcwNTU0NjN9._KIfokRmM38MjP-q2pxB6Lk_-dcg2VnLg9QiuwksxKU
+   
+    + Attributes (AMOUNT_WITH_CARD)
+        
++ Response 200 (application/json)
+
+    + Attributes (TRANSACTION_RESPONSE_WITH_CARD)        
+
++ Request Making an authorization transaction providing card information and existing customer vault information with meta data (application/json)
+    + Headers
+
+            Authorization: Bearer eyJhbGciOiJIUzI1NiJ9.eyJhY2Nlc3NfdG9rZW4iOiIxM2EyN2ViZS1iZTEwLTQzY2ItYjFmOC1lYjY4ZWEwOGFlNGIiLCJleHAiOjE0NTcwNTU0NjN9._KIfokRmM38MjP-q2pxB6Lk_-dcg2VnLg9QiuwksxKU
+   
+    + Attributes (AMOUNT_WITH_CARD_AND_METADATA)
+
++ Response 200 (application/json)
+
+    + Attributes (TRANSACTION_RESPONSE_WITH_METADATA)
+
+### Authorization Transaction using Saved Card [POST /authorize/customer/{customerLookupId}/card/{cardLookupId}]
+
+Create a authorization transaction using saved payment information from customer vault
+
++ Parameters
+    + customerLookupId: 171336 (number, required) - Customer ID from Customer Vault
+    + cardLookupId: Nlc3NfdG9rZ (string, required) - Credit card Lookup ID from customer vault that will be used to create the authorization transaction
+
++ Request Make a sale transaction using saved card in customer vault  (application/json)
+    + Headers
+
+            Authorization: Bearer eyJhbGciOiJIUzI1NiJ9.eyJhY2Nlc3NfdG9rZW4iOiIxM2EyN2ViZS1iZTEwLTQzY2ItYjFmOC1lYjY4ZWEwOGFlNGIiLCJleHAiOjE0NTcwNTU0NjN9._KIfokRmM38MjP-q2pxB6Lk_-dcg2VnLg9QiuwksxKU
+            
+    + Attributes (AMOUNT)
+            
++ Response 200 (application/json)
+
+    + Attributes (TRANSACTION_RESPONSE_WITH_CARD)
+
+## Capture [/capture/{transactionId}]
+### Capture Transaction with Original ID [POST /capture/{transactionId}]
+
+Capture providing original transaction id
+
++ Parameters
+    + transactionId: 171336 (number, required) - Original transaction ID
+
++ Request Make a capture transaction with original transaction ID and transaction amount (application/json)
+    + Headers
+
+            Authorization: Bearer eyJhbGciOiJIUzI1NiJ9.eyJhY2Nlc3NfdG9rZW4iOiIxM2EyN2ViZS1iZTEwLTQzY2ItYjFmOC1lYjY4ZWEwOGFlNGIiLCJleHAiOjE0NTcwNTU0NjN9._KIfokRmM38MjP-q2pxB6Lk_-dcg2VnLg9QiuwksxKU
+
+    + Attributes (AMOUNT)
+
++ Response 200 (application/json)
+
+    + Attributes (TRANSACTION_RESPONSE_WITH_CARD)
+
++ Request Make a capture transaction provide original transaction ID and transaction amount and meta data (application/json)
+    + Headers
+
+            Authorization: Bearer eyJhbGciOiJIUzI1NiJ9.eyJhY2Nlc3NfdG9rZW4iOiIxM2EyN2ViZS1iZTEwLTQzY2ItYjFmOC1lYjY4ZWEwOGFlNGIiLCJleHAiOjE0NTcwNTU0NjN9._KIfokRmM38MjP-q2pxB6Lk_-dcg2VnLg9QiuwksxKU
+
+    + Attributes (AMOUNT_WITH_CARD_AND_METADATA)
+
++ Response 200 (application/json)
+
+    + Attributes (TRANSACTION_RESPONSE_WITH_METADATA)
+    
+## Refund [/refund/{transactionId}]
+### Refund Transaction with Original ID [POST /refund/{transactionId}]
+
+Refund providing original transaction ID
+
++ Parameters
+    + transactionId: 171336 (number, required) - Original transaction ID
+
++ Request Make a refund transaction with original transaction ID and refund amount (application/json)
+    + Headers
+
+            Authorization: Bearer eyJhbGciOiJIUzI1NiJ9.eyJhY2Nlc3NfdG9rZW4iOiIxM2EyN2ViZS1iZTEwLTQzY2ItYjFmOC1lYjY4ZWEwOGFlNGIiLCJleHAiOjE0NTcwNTU0NjN9._KIfokRmM38MjP-q2pxB6Lk_-dcg2VnLg9QiuwksxKU
+
+    + Attributes (AMOUNT)
+
++ Response 200 (application/json)
+
+    + Attributes (TRANSACTION_RESPONSE_WITH_CARD)
+
++ Response 500 (application/json)
+
+    Internal Server Error: Returned when Authorization server is experiencing some internal errors
+
+    + Attributes (INTERNAL_SERVER_ERROR_RESPONSE)
+
++ Request Make a refund transaction with refund amount and meta data (application/json)
+    + Headers
+
+            Authorization: Bearer eyJhbGciOiJIUzI1NiJ9.eyJhY2Nlc3NfdG9rZW4iOiIxM2EyN2ViZS1iZTEwLTQzY2ItYjFmOC1lYjY4ZWEwOGFlNGIiLCJleHAiOjE0NTcwNTU0NjN9._KIfokRmM38MjP-q2pxB6Lk_-dcg2VnLg9QiuwksxKU
+
+    + Attributes (AMOUNT_WITH_METADATA)
+
++ Response 200 (application/json)
+
+    + Attributes (TRANSACTION_RESPONSE_WITH_METADATA)
+
++ Response 500 (application/json)
+
+    Internal Server Error: Returned when Authorization server is experiencing some internal errors
+
+    + Attributes (INTERNAL_SERVER_ERROR_RESPONSE)
+
+### Naked Refund with Card information [POST /refund]
+
+Naked Refund providing card inforamtion
+
++ Request Make a naked refund transaction providing card info and refund amount and meta data (application/json)
+    + Headers
+
+            Authorization: Bearer eyJhbGciOiJIUzI1NiJ9.eyJhY2Nlc3NfdG9rZW4iOiIxM2EyN2ViZS1iZTEwLTQzY2ItYjFmOC1lYjY4ZWEwOGFlNGIiLCJleHAiOjE0NTcwNTU0NjN9._KIfokRmM38MjP-q2pxB6Lk_-dcg2VnLg9QiuwksxKU
+
+    + Attributes (AMOUNT_WITH_CARD_AND_METADATA)
+
++ Response 200 (application/json)
+
+    + Attributes (TRANSACTION_RESPONSE_WITH_METADATA)
+
++ Response 500 (application/json)
+
+    Internal Server Error: Returned when Authorization server is experiencing some internal errors
+
+    + Attributes (INTERNAL_SERVER_ERROR_RESPONSE)
+    
+## Transaction [/transaction]
+
+### Get Merchant All Transactions [GET /transaction{?limit,before,after,from_date,to_date,transaction_status,channel,min_amount,max_amount,email_address,first_name,last_name}]
+
+Query all transactions for current merchant
+
++ Parameters
+    + limit: 100 (number, optional) - The number of transaction within each page
+    + before: '3X67XWEE' (string, optional) - Optional cursor, if provided API will return transactions before it
+    + after: 'XWERE836' (string, optional) - Optional cursor, if provided API will return transactions after it
+    + `from_date`: `2016-12-30` (datetime, optional) - Optional start date for a date range filter. The format should be 'yyyy-MM-dd`
+    + `to_date`: `2016-12-30` (datetime, optional) - Optional end date for a date range filter. The format should be 'yyyy-MM-dd`
+    + `transaction_status` (enum[string], optional) - List of comma-separated statuses
+        + Members
+            + 'PENDING'
+            + 'APPROVED'
+            + 'DECLINED'
+    + channel (enum[string], optional) - List of comma-separated channels
+        + Members
+            + 'VT'
+            + 'MOBILE'
+            + 'TABLET_POS'
+            + 'E_COMMERCE'
+            + 'RECURRING'
+            + 'INVOICE'
+    + `min_amount`: 7.89 (number, optional) - Filter all transactions below the given amount from the result set
+    + `max_amount`: 799.89 (number, optional) - Filter all transactions above the given amount from the result set
+    + `email_address`: 'brandon@stark.com' (string, optional) - Returns all transaction with the given email address
+    + `first_name`: 'Brandon' (string, optional) - Returns all transaction with the given first name
+    + `last_name`: 'Stark' (string, optional) - Returns all transaction with the given last name
+
+
+
++ Request Generate an access token for grant type "authorization_code" (application/json)
+
+
+    + Headers
+
+            Authorization: Bearer eyJhbGciOiJIUzI1NiJ9.eyJhY2Nlc3NfdG9rZW4iOiIxM2EyN2ViZS1iZTEwLTQzY2ItYjFmOC1lYjY4ZWEwOGFlNGIiLCJleHAiOjE0NTcwNTU0NjN9._KIfokRmM38MjP-q2pxB6Lk_-dcg2VnLg9QiuwksxKU
+
++ Response 200 (application/json)
+
+    + Attributes (VALID_TRANSACTION_RESPONSE)
+
++ Response 500 (application/json)
+
+    Internal Server Error: Returned when Authorization server is experiencing some internal errors
+
+    + Attributes (INTERNAL_SERVER_ERROR_RESPONSE)
+    
+
+### Get All Transactions created by a user [GET /transaction/user{?limit,before,after,from_date,to_date,transaction_status,channel,min_amount,max_amount,email_address,first_name,last_name}]
+
+Query all transactions for current merchant filtered by the sender user Id
+
++ Parameters
+    + limit: 100 (number, optional) - The number of transaction within each page
+    + before: '3X67XWEE' (string, optional) - Optional cursor, if provided API will return transactions before it
+    + after: 'XWERE836' (string, optional) - Optional cursor, if provided API will return transactions after it
+    + `from_date`: `2016-12-30` (datetime, optional) - Optional start date for a date range filter. The format should be 'yyyy-MM-dd`
+    + `to_date`: `2016-12-30` (datetime, optional) - Optional end date for a date range filter. The format should be 'yyyy-MM-dd`
+    + `transaction_status` (enum[string], optional) - List of comma-separated statuses
+        + Members
+            + 'PENDING'
+            + 'APPROVED'
+            + 'DECLINED'
+    + channel (enum[string], optional) - List of comma-separated channels
+        + Members
+            + 'VT'
+            + 'MOBILE'
+            + 'TABLET_POS'
+            + 'E_COMMERCE'
+            + 'RECURRING'
+            + 'INVOICE'
+    + `min_amount`: 7.89 (number, optional) - Filter all transactions below the given amount from the result set
+    + `max_amount`: 799.89 (number, optional) - Filter all transactions above the given amount from the result set
+    + `email_address`: 'brandon@stark.com' (string, optional) - Returns all transaction with the given email address
+    + `first_name`: 'Brandon' (string, optional) - Returns all transaction with the given first name
+    + `last_name`: 'Stark' (string, optional) - Returns all transaction with the given last name
+
+
+
++ Request Generate an access token for grant type "authorization_code" (application/json)
+
+
+    + Headers
+
+            Authorization: Bearer eyJhbGciOiJIUzI1NiJ9.eyJhY2Nlc3NfdG9rZW4iOiIxM2EyN2ViZS1iZTEwLTQzY2ItYjFmOC1lYjY4ZWEwOGFlNGIiLCJleHAiOjE0NTcwNTU0NjN9._KIfokRmM38MjP-q2pxB6Lk_-dcg2VnLg9QiuwksxKU
+
++ Response 200 (application/json)
+
+    + Attributes (VALID_TRANSACTION_RESPONSE)
+
++ Response 500 (application/json)
+
+    Internal Server Error: Returned when Authorization server is experiencing some internal errors
+
+    + Attributes (INTERNAL_SERVER_ERROR_RESPONSE)
+
+
+### Get Individual Transaction [GET /transaction/{transactionId}]
+
+Query one transaction providing the transaction ID
++ Parameters
+    + transactionId: 171336 (number, required) - transaction ID
+
++ Request Generate an access token for grant type "authorization_code" (application/json)
+    + Headers
+
+            Authorization: Bearer eyJhbGciOiJIUzI1NiJ9.eyJhY2Nlc3NfdG9rZW4iOiIxM2EyN2ViZS1iZTEwLTQzY2ItYjFmOC1lYjY4ZWEwOGFlNGIiLCJleHAiOjE0NTcwNTU0NjN9._KIfokRmM38MjP-q2pxB6Lk_-dcg2VnLg9QiuwksxKU
+
++ Response 200 (application/json)
+
+    + Attributes (VALID_TRANSACTION_RESPONSE)
+
++ Response 500 (application/json)
+
+    Internal Server Error: Returned when Authorization server is experiencing some internal errors
+
+    + Attributes (INTERNAL_SERVER_ERROR_RESPONSE)
+
+# Data Structures
+
+## AMOUNT (object)
++ amount: 10.99 (number, required) - Transaction amount, in dollars, e.g. 10.99 = 10 dollar and 99 cents 
++ `test_mode`: true (boolean, optional) - RESERVED FOR INTERNAL ONLY
+
+## AMOUNT_WITH_CARD (object)
++ amount: 10.99 (number, required) - Transaction amount, in dollars, e.g. 10.99 = 10 dollar and 99 cents 
++ `card_expiry_month`: 11 (number, required) - The double digit month the card expires
++ `card_expiry_year`: 16 (number, required) - The double digit year the card expires. Ex. 16 making the expiration year 2016.
++ `card_number`: `4111111111111111` (string, required) - Customer credit card number (16 digits for most card brands, 15 digits for American Express). Is space allowed???
++ cvv2: 595 (number, required) - A credit card’s verification code, otherwise known as CVC or CVV; the three or four digit number on the back of most major cards, and the four digit number found on the front of American Express cards. We strongly recommend that you utilize the cvv2 field to help protect against fraud and charge-backs. 
++ `test_mode`: true (boolean, optional) - RESERVED FOR INTERNAL ONLY
+
+## AMOUNT_WITH_CARD_AND_METADATA (object)
++ amount: 10.99 (number, required) - Transaction amount, in dollars, e.g. 10.99 = 10 dollar and 99 cents 
++ `card_expiry_month`: 11 (number, required) - The double digit month the card expires
++ `card_expiry_year`: 16 (number, required) - The double digit year the card expires. Ex. 16 making the expiration year 2016.
++ `card_number`: `4111111111111111` (string, required) - Customer credit card number (16 digits for most card brands, 15 digits for American Express). Is space allowed???
++ cvv2: 595 (number, required) - A credit card’s verification code, otherwise known as CVC or CVV; the three or four digit number on the back of most major cards, and the four digit number found on the front of American Express cards. We strongly recommend that you utilize the cvv2 field to help protect against fraud and charge-backs. 
++ email: brandon@stark.com (string, optional) - 
++ `first_name`: Brandon (string, optional) -
++ `last_name`: Stark (string, optional) -
++ company: Payfirma (string, optional) - 
++ `bcc_emails`: john.snow@stark.com (string, optional) -
++ telephone: 1234567891 (string, optional) -
++ address1: No. 1 Road (string, optional) -
++ address2: Street 2 (string, optional) -
++ city: Vancouver (string, optional) -
++ province: BC (string, optional) -
++ country: Canada (string, optional) -
++ `postal_code`: `V6E 1B2` (string, optional) -
++ `custom_id`: Internal456 (string, optional) 
++ `invoice_id`: InternalInvoice12 (string, optional) -
++ `sending_receipt`: true (boolean, optional) - DEFAULT is true
++ `test_mode`: true (boolean, optional) - RESERVED FOR INTERNAL ONLY
+
+## AMOUNT_WITH_METADATA (object)
++ amount: 10.99 (number, required) - Transaction amount, in dollars, e.g. 10.99 = 10 dollar and 99 cents 
++ email: brandon@stark.com (string, optional) - 
++ `first_name`: Brandon (string, optional) -
++ `last_name`: Stark (string, optional) -
++ company: Payfirma (string, optional) - 
++ `bcc_emails`: john.snow@stark.com (string, optional) -
++ telephone: 1234567891 (string, optional) -
++ address1: No. 1 Road (string, optional) -
++ address2: Street 2 (string, optional) -
++ city: Vancouver (string, optional) -
++ province: BC (string, optional) -
++ country: Canada (string, optional) -
++ `postal_code`: `V6E 1B2` (string, optional) -
++ `custom_id`: Internal456 (string, optional) 
++ `invoice_id`: InternalInvoice12 (string, optional) -
++ `sending_receipt`: true (boolean, optional) - DEFAULT is true
++ `test_mode`: true (boolean, optional) - RESERVED FOR INTERNAL ONLY
+
+## TRANSACTION_RESPONSE (object)
++ amount: 10.99 (number, required) - Transaction amount, in dollars, e.g. 10.99 = 10 dollar and 99 cents 
++ id: 2992429 (number, required) - 
++ `transaction_id`: NV0B6eZB06 (string, required) - 
++ `transaction_success`: true (boolean, required) - true or false indicate the result of a transaction
++ 'transaction_result': APPROVED (enum[string], required)  - transaction result
+    + Members
+        + 'PENDING'
+        + 'APPROVED'
+        + 'DECLINED'
++ `transaction_message`: `Insufficient funds` (string, optional) - Gateway error message
++ `transaction_time`: 1467760023000 (number, required) - EPOCH time represent when the transaction was created
++ `transaction_type`: SALE (enum[string], required) - 
+    + Members
+        + 'SALE'
+        + 'AUTHORIZE'
+        + 'CAPTURE'
+        + 'REFUND'
+
+## VALID_TRANSACTION_RESPONSE (object)
++ id: 2992429 (number, required) - Internal ID representation of transaction
++ 'transaction_id`: NV0B6eZB06 (string, required) - 
++ `transaction_success`: true (boolean, required) - true or false indicate the result of a transaction
++ 'transaction_result': PENDING (enum[string], required)  - transaction result
+    + Members
+        + 'PENDING'
+        + 'APPROVED'
+        + 'DECLINED'
++ `transaction_time`: 1467760023000 (number, required) - EPOCH time represent when the transaction was created
++ `transaction_type`: SALE (enum[string], required) -
+    + Members
+        + 'SALE'
+        + 'AUTHORIZE'
+        + 'CAPTURE'
+        + 'REFUND'
+
+
+## TRANSACTION_RESPONSE_WITH_CARD (object)
++ amount: 10.99 (number, required) - Transaction amount, in dollars, e.g. 10.99 = 10 dollar and 99 cents
++ id: 2992429 (number, required) - 
++ `transaction_id`: NV0B6eZB06 (string, required) - 
++ `transaction_success`: true (boolean, required) - true or false indicate the result of a transaction
++ 'transaction_result': APPROVED (enum[string], required)  - transaction result
+    + Members
+        + 'PENDING'
+        + 'APPROVED'
+        + 'DECLINED'
++ `transaction_message`: `Insufficient funds` (string, optional) - Gateway error message
++ `transaction_time`: 1467760023000 (number, required) - EPOCH time represent when the transaction was created
++ `transaction_type`: SALE (enum[string], required) - 
++ email: brandon@stark.com (string, optional) - 
++ `first_name`: Brandon (string, optional) -
++ `last_name`: Stark (string, optional) -
++ company: Payfirma (string, optional) - 
++ `card_type`: OTHER (enum[string], optional) - 
++ `card_suffix`: 9857 (number, optional) -
+
+## TRANSACTION_RESPONSE_WITH_METADATA (object)
++ amount: 10.99 (number, required) - TTransaction amount, in dollars, e.g. 10.99 = 10 dollar and 99 cents
++ id: 2992429 (number, required) - 
++ `transaction_id`: NV0B6eZB06 (string, required) - 
++ `transaction_success`: true (boolean, required) - true or false indicate the result of a transaction
++ 'transaction_result': APPROVED (enum[string], required)  - transaction result
+    + Members
+        + 'PENDING'
+        + 'APPROVED'
+        + 'DECLINED'
++ `transaction_message`: `Insufficient funds` (string, optional) - Gateway error message
++ `transaction_time`: 1467760023000 (number, required) - EPOCH time represent when the transaction was created
++ `transaction_type`: SALE (enum[string], required) - 
++ email: brandon@stark.com (string, optional) - 
++ `first_name`: Brandon (string, optional) -
++ `last_name`: Stark (string, optional) -
++ company: Payfirma (string, optional) - 
++ `bcc_emails`: john.snow@stark.com (string, optional) -
++ telephone: 1234567891 (string, optional) -
++ address1: No. 1 Road (string, optional) -
++ address2: Street 2 (string, optional) -
++ city: Vancouver (string, optional) -
++ province: BC (string, optional) -
++ country: Canada (string, optional) -
++ `postal_code`: `V6E 1B2` (string, optional) -
++ `custom_id`: Internal456 (string, optional) 
++ `invoice_id`: InternalInvoice12 (string, optional) -
+
+## UNAUTHORIZED_RESPONSE (object)
++ error: `unsupported_grant_type` (string, required) - High level error code
++ `error_description`: `Unsupported grant type: client_credential` (string, required) - Error message capturing the details about the nature of the error
+
+## BAD_REQUEST_RESPONSE (object)
++ status: 400 (number, required) - High level error code
++ message: `API Gateway Service Error` (string, required) - Error message capturing the details about the nature of the error
++ errors
+    + code: `Bad Request` (string, required)
+    + message: `Invalid basic authentication token` (string, required)
++ uuid: `0e31aff0-9259-40e0-a5c6-e64c849b9f32` (string, required)
+
+## METHOD_NOT_ALLOWED_RESPONSE (object)
++ status: 405 (number, required) - High level error code
++ message: `API Gateway Service Error` (string, required) - Error message capturing the details about the nature of the error
++ errors
+    + code: `Method Not Allowed` (string, required)
+    + message: `Request method 'GET' not supported` (string, required)
++ uuid: `0e31aff0-9259-40e0-a5c6-e64c849b9f32` (string, required)
+
+## NOT_FOUND_RESPONSE (object)
++ status: 404 (number, required) - High level error code
++ message: `API Gateway Service Error` (string, required) - Error message capturing the details about the nature of the error
++ errors
+    + code: `Not Found` (string, required)
+    + message: `No message available` (string, required)
++ uuid: `0e31aff0-9259-40e0-a5c6-e64c849b9f32` (string, required)
+
+## INTERNAL_SERVER_ERROR_RESPONSE (object)
++ status: 17616508 (number, required) - ???
++ message: 'Server_Error' (string, required) - Error message capturing the details about the nature of the error
++ uuid: '' (string, required) - Unique ID representing the error
+
+## SERVER_RESPONSE (object)
++ status: ok (string, required)
