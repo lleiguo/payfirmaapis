@@ -3,20 +3,21 @@ HOST: https://dev-test-apigateway.payfirma.com/transaction-service
 
 # Payfirma Transaction Service
 
-Transactions represent customer payments, Payfirma transaction service support merchant to process the following transactions:
-* Create a sale transaction using payment information directly or through customer vault
-* Make an authorization transaction without actually charging customer
-* Capture the funds that are owed to merchant transferred from the customer’s account to the merchant’s account 
-* Refund a settled transaction to return full or partial funds to the customer
-* Refund directly to a provided credit card without settled transaction (naked refund)
-* Create a transaction using payment information
-* Find a transaction, or search for transactions that match specific criteria
+The transaction service allows you to build the following payment functions into your website or enterprise application:
+* Charge a customers credit card 
+* Complete an authorization transaction without actually charging a customer
+* Capture the funds that are owed based on an authorized transaction  
+* Refund a settled transaction to return all or some of the original amount to the customer
+* Refund directly to a provided credit card without an original transaction (open refund)
+* Associate customer profile details with each transaction
+* Complete a transaction with credit card details already stored in a customer profile
+* Find a specific transaction, and retrieve any transactions that match specific criteria
 
-In the sections below, you will find detailed information for each end point Payfirma transaction service supports.
+In the sections below, you will find detailed information for each end-point supported by the Transaction Service.
 
 ## Sale [/sale]
 
-### Sale Transaction using Card [POST /sale]
+### Sale Transaction using a Credit Card [POST /sale]
 
 Create a sale transaction using provided card information
 
@@ -67,9 +68,9 @@ Create a sale transaction using provided card information
 
     + Attributes (TRANSACTION_RESPONSE_WITH_METADATA)
     
-### Sale Transaction using Customer Vault [POST /sale/customer/{customerLookupId}]
+### Sale Transaction and associating a Customer Profile [POST /sale/customer/{customerLookupId}]
 
-Create a sale transaction using saved customer vault information
+Create a sale transaction using a credit card and associate customer fields with the transaction request
 
 + Parameters
     + customerLookupId: 171336 (number, required) - Customer ID from Customer Vault
@@ -110,9 +111,9 @@ Create a sale transaction using saved customer vault information
     + Attributes (TRANSACTION_RESPONSE_WITH_METADATA)
     
     
-### Sale Transaction using Saved Card [POST /sale/customer/{customerLookupId}/card/{cardLookupId}]
+### Sale Transaction using a Stored Card [POST /sale/customer/{customerLookupId}/card/{cardLookupId}]
 
-Create a sale transaction using saved payment information
+Create a sale transaction using a credit card stored in a Customer Vault profile
 
 + Parameters
     + customerLookupId: 171336 (number, required) - Customer ID from Customer Vault
@@ -133,9 +134,9 @@ Create a sale transaction using saved payment information
 ## Authorize [/authorize]
 
 
-### Authorization Transaction using Card [POST /authorize]
+### Authorization Transaction using Credit Card [POST /authorize]
 
-Create a authorization transaction using provided payment information
+Create an authorization transaction using provided payment card information
 
 + Request Making an authorization with only card information (application/json)
     + Headers
@@ -159,7 +160,7 @@ Create a authorization transaction using provided payment information
 
     + Attributes (TRANSACTION_RESPONSE_WITH_METADATA)
     
-### Authorization Transaction using Customer Vault [POST /authorize/customer/{customerLookupId}]
+### Authorization Transaction and associating a Customer Profile [POST /authorize/customer/{customerLookupId}]
 
 Create a authorization transaction using saved customer vault information
 
@@ -201,9 +202,9 @@ Create a authorization transaction using saved customer vault information
 
     + Attributes (TRANSACTION_RESPONSE_WITH_METADATA)
 
-### Authorization Transaction using Saved Card [POST /authorize/customer/{customerLookupId}/card/{cardLookupId}]
+### Authorization Transaction using a Stored Card [POST /authorize/customer/{customerLookupId}/card/{cardLookupId}]
 
-Create a authorization transaction using saved payment information from customer vault
+Create an authorization transaction using saved payment information from customer vault
 
 + Parameters
     + customerLookupId: 171336 (number, required) - Customer ID from Customer Vault
@@ -221,9 +222,9 @@ Create a authorization transaction using saved payment information from customer
     + Attributes (TRANSACTION_RESPONSE_WITH_CARD)
 
 ## Capture [/capture/{transactionId}]
-### Capture Transaction with Original ID [POST /capture/{transactionId}]
+### Capture Transaction with Authorization Original ID [POST /capture/{transactionId}]
 
-Capture providing original transaction id
+Complete a capture transaction by providing the original transaction id from an authorization transaction
 
 + Parameters
     + transactionId: 171336 (number, required) - Original transaction ID
@@ -253,7 +254,7 @@ Capture providing original transaction id
 ## Refund [/refund/{transactionId}]
 ### Refund Transaction with Original ID [POST /refund/{transactionId}]
 
-Refund providing original transaction ID
+Complete a refund by providing the original transaction ID from a completed sale or capture transaction
 
 + Parameters
     + transactionId: 171336 (number, required) - Original transaction ID
@@ -292,9 +293,9 @@ Refund providing original transaction ID
 
     + Attributes (INTERNAL_SERVER_ERROR_RESPONSE)
 
-### Naked Refund with Card information [POST /refund]
+### Open Refund with Credit Card information [POST /refund]
 
-Naked Refund providing card inforamtion
+Complete an open refund by providing the card information
 
 + Request Make a naked refund transaction providing card info and refund amount and meta data (application/json)
     + Headers
@@ -315,9 +316,9 @@ Naked Refund providing card inforamtion
     
 ## Transaction [/transaction]
 
-### Get Merchant All Transactions [GET /transaction{?limit,before,after,from_date,to_date,transaction_status,channel,min_amount,max_amount,email_address,first_name,last_name}]
+### Get All Transactions for an Account [GET /transaction{?limit,before,after,from_date,to_date,transaction_status,channel,min_amount,max_amount,email_address,first_name,last_name}]
 
-Query all transactions for current merchant
+Query all transactions for a specific merchant account (in the event you have more than one) 
 
 + Parameters
     + limit: 100 (number, optional) - The number of transaction within each page
@@ -364,9 +365,9 @@ Query all transactions for current merchant
     + Attributes (INTERNAL_SERVER_ERROR_RESPONSE)
     
 
-### Get All Transactions created by a user [GET /transaction/user{?limit,before,after,from_date,to_date,transaction_status,channel,min_amount,max_amount,email_address,first_name,last_name}]
+### Get All Transactions for a Specific User [GET /transaction/user{?limit,before,after,from_date,to_date,transaction_status,channel,min_amount,max_amount,email_address,first_name,last_name}]
 
-Query all transactions for current merchant filtered by the sender user Id
+Query all transactions for current merchant filtered by the staff or user ID
 
 + Parameters
     + limit: 100 (number, optional) - The number of transaction within each page
@@ -415,7 +416,8 @@ Query all transactions for current merchant filtered by the sender user Id
 
 ### Get Individual Transaction [GET /transaction/{transactionId}]
 
-Query one transaction providing the transaction ID
+Query one transaction by providing the transaction ID
+
 + Parameters
     + transactionId: 171336 (number, required) - transaction ID
 
