@@ -113,7 +113,7 @@ Create a sale transaction using a credit card and associate customer fields with
     
 ### Sale Transaction using a Stored Card [POST /sale/customer/{customerLookupId}/card/{cardLookupId}]
 
-Create a sale transaction using a credit card stored in a Customer Vault profile
+Create a sale transaction using a credit card stored in a customer vault profile
 
 + Parameters
     + customerLookupId: 171336 (number, required) - Customer ID from Customer Vault
@@ -347,7 +347,7 @@ Query all transactions for a specific merchant account (in the event you have mo
 
 
 
-+ Request Generate an access token for grant type "authorization_code" (application/json)
++ Request Get all transactions with specified filters (application/json)
 
 
     + Headers
@@ -396,7 +396,7 @@ Query all transactions for current merchant filtered by the staff or user ID
 
 
 
-+ Request Generate an access token for grant type "authorization_code" (application/json)
++ Request Get all transactions belong to the current user with specified filters (application/json)
 
 
     + Headers
@@ -421,7 +421,7 @@ Query one transaction by providing the transaction ID
 + Parameters
     + transactionId: 171336 (number, required) - transaction ID
 
-+ Request Generate an access token for grant type "authorization_code" (application/json)
++ Request Get a specific transaction using transaction ID (application/json)
     + Headers
 
             Authorization: Bearer eyJhbGciOiJIUzI1NiJ9.eyJhY2Nlc3NfdG9rZW4iOiIxM2EyN2ViZS1iZTEwLTQzY2ItYjFmOC1lYjY4ZWEwOGFlNGIiLCJleHAiOjE0NTcwNTU0NjN9._KIfokRmM38MjP-q2pxB6Lk_-dcg2VnLg9QiuwksxKU
