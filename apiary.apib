@@ -68,12 +68,12 @@ Create a sale transaction using provided card information
 
     + Attributes (TRANSACTION_RESPONSE_WITH_METADATA)
     
-### Sale Transaction and associating a Customer Profile [POST /sale/customer/{customerLookupId}]
+### Sale Transaction and associating a Customer Profile [POST /sale/customer/{customerId}]
 
 Create a sale transaction using a credit card and associate customer fields with the transaction request
 
 + Parameters
-    + customerLookupId: 171336 (number, required) - Customer ID from Customer Vault
+    + customerId: 171336 (number, required) - Customer ID from Customer Vault
     
 + Request Making a sale using existing customer vault information (application/json)
     + Headers
@@ -111,12 +111,12 @@ Create a sale transaction using a credit card and associate customer fields with
     + Attributes (TRANSACTION_RESPONSE_WITH_METADATA)
     
     
-### Sale Transaction using a Stored Card [POST /sale/customer/{customerLookupId}/card/{cardLookupId}]
+### Sale Transaction using a Stored Card [POST /sale/customer/{customerId}/card/{cardLookupId}]
 
 Create a sale transaction using a credit card stored in a customer vault profile
 
 + Parameters
-    + customerLookupId: 171336 (number, required) - Customer ID from Customer Vault
+    + customerId: 171336 (number, required) - Customer ID from Customer Vault
     + cardLookupId: Nlc3NfdG9rZ (string, required) - Credit card Lookup ID from Customer Vault
 
 + Request Make a sale transaction using saved card in customer vault  (application/json)
@@ -160,12 +160,12 @@ Create an authorization transaction using provided payment card information
 
     + Attributes (TRANSACTION_RESPONSE_WITH_METADATA)
     
-### Authorization Transaction and associating a Customer Profile [POST /authorize/customer/{customerLookupId}]
+### Authorization Transaction and associating a Customer Profile [POST /authorize/customer/{customerId}]
 
 Create an authorization transaction using saved customer vault information
 
 + Parameters
-    + customerLookupId: 171336 (number, required) - Customer ID from Customer Vault
+    + customerId: 171336 (number, required) - Customer ID from Customer Vault
     
 + Request Making an authorization using existing customer vault information (application/json)
     + Headers
@@ -202,12 +202,12 @@ Create an authorization transaction using saved customer vault information
 
     + Attributes (TRANSACTION_RESPONSE_WITH_METADATA)
 
-### Authorization Transaction using a Stored Card [POST /authorize/customer/{customerLookupId}/card/{cardLookupId}]
+### Authorization Transaction using a Stored Card [POST /authorize/customer/{customerId}/card/{cardLookupId}]
 
 Create an authorization transaction using saved payment information from customer vault
 
 + Parameters
-    + customerLookupId: 171336 (number, required) - Customer ID from Customer Vault
+    + customerId: 171336 (number, required) - Customer ID from Customer Vault
     + cardLookupId: Nlc3NfdG9rZ (string, required) - Credit card Lookup ID from customer vault that will be used to create the authorization transaction
 
 + Request Make a sale transaction using saved card in customer vault  (application/json)
