@@ -328,17 +328,17 @@ Query all transactions for a specific merchant account (in the event you have mo
     + `to_date`: `2016-12-30` (datetime, optional) - Optional end date for a date range filter. The format should be `yyyy-MM-dd`
     + `transaction_status` (enum[string], optional) - List of comma-separated statuses
         + Members
-            + 'PENDING'
-            + 'APPROVED'
-            + 'DECLINED'
+            + `PENDING`
+            + `APPROVED`
+            + `DECLINED`
     + channel (enum[string], optional) - List of comma-separated channels
         + Members
-            + 'VT'
-            + 'MOBILE'
-            + 'TABLET_POS'
-            + 'E_COMMERCE'
-            + 'RECURRING'
-            + 'INVOICE'
+            + `VT`
+            + `MOBILE`
+            + `TABLET_POS`
+            + `E_COMMERCE`
+            + `RECURRING`
+            + `INVOICE`
     + `min_amount`: 7.89 (number, optional) - Filter all transactions below the given amount from the result set
     + `max_amount`: 799.89 (number, optional) - Filter all transactions above the given amount from the result set
     + `email_address`: `brandon@stark.com` (string, optional) - Returns all transaction with the given email address
@@ -371,23 +371,23 @@ Query all transactions for current merchant filtered by the staff or user ID
 
 + Parameters
     + limit: 100 (number, optional) - The number of transaction within each page
-    + before: '3X67XWEE' (string, optional) - Optional cursor, if provided API will return transactions before it
-    + after: 'XWERE836' (string, optional) - Optional cursor, if provided API will return transactions after it
-    + `from_date`: `2016-12-30` (datetime, optional) - Optional start date for a date range filter. The format should be 'yyyy-MM-dd`
-    + `to_date`: `2016-12-30` (datetime, optional) - Optional end date for a date range filter. The format should be 'yyyy-MM-dd`
+    + before: `3X67XWEE` (string, optional) - Optional cursor, if provided API will return transactions before it
+    + after: `XWERE836` (string, optional) - Optional cursor, if provided API will return transactions after it
+    + `from_date`: `2016-12-30` (datetime, optional) - Optional start date for a date range filter. The format should be `yyyy-MM-dd`
+    + `to_date`: `2016-12-30` (datetime, optional) - Optional end date for a date range filter. The format should be `yyyy-MM-dd`
     + `transaction_status` (enum[string], optional) - List of comma-separated statuses
         + Members
-            + 'PENDING'
-            + 'APPROVED'
-            + 'DECLINED'
+            + `PENDING`
+            + `APPROVED`
+            + `DECLINED`
     + channel (enum[string], optional) - List of comma-separated channels
         + Members
-            + 'VT'
-            + 'MOBILE'
-            + 'TABLET_POS'
-            + 'E_COMMERCE'
-            + 'RECURRING'
-            + 'INVOICE'
+            + `VT`
+            + `MOBILE`
+            + `TABLET_POS`
+            + `E_COMMERCE`
+            + `RECURRING`
+            + `INVOICE`
     + `min_amount`: 7.89 (number, optional) - Filter all transactions below the given amount from the result set
     + `max_amount`: 799.89 (number, optional) - Filter all transactions above the given amount from the result set
     + `email_address`: `brandon@stark.com` (string, optional) - Returns all transaction with the given email address
@@ -523,7 +523,7 @@ Query one transaction by providing the transaction ID
 + `transaction_time`: 1467760023000 (number, required) - EPOCH time represent when the transaction was created
 + `transaction_type`: SALE (enum[string], required) -
     + Members
-        + `SALE
+        + `SALE`
         + `AUTHORIZE`
         + `CAPTURE`
         + `REFUND`
