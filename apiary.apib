@@ -1,5 +1,5 @@
 FORMAT: 1A
-HOST: https://dev-test-apigateway.payfirma.com/transaction-service
+HOST: https://apigateway.payfirma.com/transaction-service
 
 # Payfirma Transaction Service
 
@@ -32,6 +32,17 @@ Create a sale transaction using provided card information
 
     + Attributes (TRANSACTION_RESPONSE)
 
++ Request Making a sale providing both card information and meta data (application/json)
+    + Headers
+
+            Authorization: Bearer eyJhbGciOiJIUzI1NiJ9.eyJhY2Nlc3NfdG9rZW4iOiIxM2EyN2ViZS1iZTEwLTQzY2ItYjFmOC1lYjY4ZWEwOGFlNGIiLCJleHAiOjE0NTcwNTU0NjN9._KIfokRmM38MjP-q2pxB6Lk_-dcg2VnLg9QiuwksxKU
+
+    + Attributes (AMOUNT_WITH_CARD_AND_METADATA)
+
++ Response 200 (application/json)
+
+    + Attributes (TRANSACTION_RESPONSE_WITH_METADATA)
+
 + Response 400 (application/json)
 
     Bad Request: Returned when the request is missing required information or having incorrect information
@@ -56,17 +67,13 @@ Create a sale transaction using provided card information
     
     + Attributes (METHOD_NOT_ALLOWED_RESPONSE)
 
++ Response 500 (application/json)
 
-+ Request Making a sale providing both card information and meta data (application/json)
-    + Headers
+    Internal Server Error: Returned when Transaction server is experiencing some internal errors
 
-            Authorization: Bearer eyJhbGciOiJIUzI1NiJ9.eyJhY2Nlc3NfdG9rZW4iOiIxM2EyN2ViZS1iZTEwLTQzY2ItYjFmOC1lYjY4ZWEwOGFlNGIiLCJleHAiOjE0NTcwNTU0NjN9._KIfokRmM38MjP-q2pxB6Lk_-dcg2VnLg9QiuwksxKU
+    + Attributes (INTERNAL_SERVER_ERROR_RESPONSE)
 
-    + Attributes (AMOUNT_WITH_CARD_AND_METADATA)
 
-+ Response 200 (application/json)
-
-    + Attributes (TRANSACTION_RESPONSE_WITH_METADATA)
     
 ### Sale Transaction and associating a Customer Profile [POST /sale/customer/{customerId}]
 
@@ -97,7 +104,7 @@ Create a sale transaction using a credit card and associate customer fields with
         
 + Response 200 (application/json)
 
-    + Attributes (TRANSACTION_RESPONSE_WITH_CARD)        
+    + Attributes (TRANSACTION_RESPONSE_WITH_CARD)    
 
 + Request Making a sale transaction providing card information and existing customer vault information with meta data (application/json)
     + Headers
@@ -109,6 +116,38 @@ Create a sale transaction using a credit card and associate customer fields with
 + Response 200 (application/json)
 
     + Attributes (TRANSACTION_RESPONSE_WITH_METADATA)
+
++ Response 400 (application/json)
+
+    Bad Request: Returned when the request is missing required information or having incorrect information
+    
+    + Attributes (BAD_REQUEST_RESPONSE)
+
++ Response 401 (application/json)
+
+    Unauthorized: Returned when Authorization header contains an invalid token or invalid client credentials provided
+    
+    + Attributes (UNAUTHORIZED_RESPONSE)
+
++ Response 404 (application/json)
+
+    Not Found:
+    
+    + Attributes (NOT_FOUND_RESPONSE)
+
++ Response 405 (application/json)
+
+    Method Not Allowed: Returned when a NON-POST method is used for the request, e.g GET
+    
+    + Attributes (METHOD_NOT_ALLOWED_RESPONSE)
+
++ Response 500 (application/json)
+
+    Internal Server Error: Returned when Transaction server is experiencing some internal errors
+
+    + Attributes (INTERNAL_SERVER_ERROR_RESPONSE)  
+
+
     
     
 ### Sale Transaction using a Stored Card [POST /sale/customer/{customerId}/card/{cardLookupId}]
@@ -129,6 +168,36 @@ Create a sale transaction using a credit card stored in a customer vault profile
 + Response 200 (application/json)
 
     + Attributes (TRANSACTION_RESPONSE_WITH_CARD)
+
++ Response 400 (application/json)
+
+    Bad Request: Returned when the request is missing required information or having incorrect information
+    
+    + Attributes (BAD_REQUEST_RESPONSE)
+
++ Response 401 (application/json)
+
+    Unauthorized: Returned when Authorization header contains an invalid token or invalid client credentials provided
+    
+    + Attributes (UNAUTHORIZED_RESPONSE)
+
++ Response 404 (application/json)
+
+    Not Found:
+    
+    + Attributes (NOT_FOUND_RESPONSE)
+
++ Response 405 (application/json)
+
+    Method Not Allowed: Returned when a NON-POST method is used for the request, e.g GET
+    
+    + Attributes (METHOD_NOT_ALLOWED_RESPONSE)
+
++ Response 500 (application/json)
+
+    Internal Server Error: Returned when Transaction server is experiencing some internal errors
+
+    + Attributes (INTERNAL_SERVER_ERROR_RESPONSE) 
 
 
 ## Authorize [/authorize]
@@ -159,6 +228,37 @@ Create an authorization transaction using provided payment card information
 + Response 200 (application/json)
 
     + Attributes (TRANSACTION_RESPONSE_WITH_METADATA)
+
++ Response 400 (application/json)
+
+    Bad Request: Returned when the request is missing required information or having incorrect information
+    
+    + Attributes (BAD_REQUEST_RESPONSE)
+
++ Response 401 (application/json)
+
+    Unauthorized: Returned when Authorization header contains an invalid token or invalid client credentials provided
+    
+    + Attributes (UNAUTHORIZED_RESPONSE)
+
++ Response 404 (application/json)
+
+    Not Found:
+    
+    + Attributes (NOT_FOUND_RESPONSE)
+
++ Response 405 (application/json)
+
+    Method Not Allowed: Returned when a NON-POST method is used for the request, e.g GET
+    
+    + Attributes (METHOD_NOT_ALLOWED_RESPONSE)
+
++ Response 500 (application/json)
+
+    Internal Server Error: Returned when Transaction server is experiencing some internal errors
+
+    + Attributes (INTERNAL_SERVER_ERROR_RESPONSE) 
+
     
 ### Authorization Transaction and associating a Customer Profile [POST /authorize/customer/{customerId}]
 
@@ -202,6 +302,38 @@ Create an authorization transaction using saved customer vault information
 
     + Attributes (TRANSACTION_RESPONSE_WITH_METADATA)
 
++ Response 400 (application/json)
+
+    Bad Request: Returned when the request is missing required information or having incorrect information
+    
+    + Attributes (BAD_REQUEST_RESPONSE)
+
++ Response 401 (application/json)
+
+    Unauthorized: Returned when Authorization header contains an invalid token or invalid client credentials provided
+    
+    + Attributes (UNAUTHORIZED_RESPONSE)
+
++ Response 404 (application/json)
+
+    Not Found:
+    
+    + Attributes (NOT_FOUND_RESPONSE)
+
++ Response 405 (application/json)
+
+    Method Not Allowed: Returned when a NON-POST method is used for the request, e.g GET
+    
+    + Attributes (METHOD_NOT_ALLOWED_RESPONSE)
+
++ Response 500 (application/json)
+
+    Internal Server Error: Returned when Transaction server is experiencing some internal errors
+
+    + Attributes (INTERNAL_SERVER_ERROR_RESPONSE) 
+
+
+
 ### Authorization Transaction using a Stored Card [POST /authorize/customer/{customerId}/card/{cardLookupId}]
 
 Create an authorization transaction using saved payment information from customer vault
@@ -220,6 +352,37 @@ Create an authorization transaction using saved payment information from custome
 + Response 200 (application/json)
 
     + Attributes (TRANSACTION_RESPONSE_WITH_CARD)
+
++ Response 400 (application/json)
+
+    Bad Request: Returned when the request is missing required information or having incorrect information
+    
+    + Attributes (BAD_REQUEST_RESPONSE)
+
++ Response 401 (application/json)
+
+    Unauthorized: Returned when Authorization header contains an invalid token or invalid client credentials provided
+    
+    + Attributes (UNAUTHORIZED_RESPONSE)
+
++ Response 404 (application/json)
+
+    Not Found:
+    
+    + Attributes (NOT_FOUND_RESPONSE)
+
++ Response 405 (application/json)
+
+    Method Not Allowed: Returned when a NON-POST method is used for the request, e.g GET
+    
+    + Attributes (METHOD_NOT_ALLOWED_RESPONSE)
+
++ Response 500 (application/json)
+
+    Internal Server Error: Returned when Transaction server is experiencing some internal errors
+
+    + Attributes (INTERNAL_SERVER_ERROR_RESPONSE) 
+
 
 ## Capture [/capture/{transactionId}]
 ### Capture Transaction with Original ID [POST /capture/{transactionId}]
@@ -250,7 +413,38 @@ Complete a capture transaction by providing the original transaction id from an 
 + Response 200 (application/json)
 
     + Attributes (TRANSACTION_RESPONSE_WITH_METADATA)
+
++ Response 400 (application/json)
+
+    Bad Request: Returned when the request is missing required information or having incorrect information
     
+    + Attributes (BAD_REQUEST_RESPONSE)
+
++ Response 401 (application/json)
+
+    Unauthorized: Returned when Authorization header contains an invalid token or invalid client credentials provided
+    
+    + Attributes (UNAUTHORIZED_RESPONSE)
+
++ Response 404 (application/json)
+
+    Not Found:
+    
+    + Attributes (NOT_FOUND_RESPONSE)
+
++ Response 405 (application/json)
+
+    Method Not Allowed: Returned when a NON-POST method is used for the request, e.g GET
+    
+    + Attributes (METHOD_NOT_ALLOWED_RESPONSE)
+
++ Response 500 (application/json)
+
+    Internal Server Error: Returned when Transaction server is experiencing some internal errors
+
+    + Attributes (INTERNAL_SERVER_ERROR_RESPONSE) 
+    
+
 ## Refund [/refund/{transactionId}]
 ### Refund Transaction with Original ID [POST /refund/{transactionId}]
 
@@ -270,11 +464,6 @@ Complete a refund by providing the original transaction ID from a completed sale
 
     + Attributes (TRANSACTION_RESPONSE_WITH_CARD)
 
-+ Response 500 (application/json)
-
-    Internal Server Error: Returned when Authorization server is experiencing some internal errors
-
-    + Attributes (INTERNAL_SERVER_ERROR_RESPONSE)
 
 + Request Make a refund transaction with refund amount and meta data (application/json)
     + Headers
@@ -287,11 +476,36 @@ Complete a refund by providing the original transaction ID from a completed sale
 
     + Attributes (TRANSACTION_RESPONSE_WITH_METADATA)
 
++ Response 400 (application/json)
+
+    Bad Request: Returned when the request is missing required information or having incorrect information
+    
+    + Attributes (BAD_REQUEST_RESPONSE)
+
++ Response 401 (application/json)
+
+    Unauthorized: Returned when Authorization header contains an invalid token or invalid client credentials provided
+    
+    + Attributes (UNAUTHORIZED_RESPONSE)
+
++ Response 404 (application/json)
+
+    Not Found:
+    
+    + Attributes (NOT_FOUND_RESPONSE)
+
++ Response 405 (application/json)
+
+    Method Not Allowed: Returned when a NON-POST method is used for the request, e.g GET
+    
+    + Attributes (METHOD_NOT_ALLOWED_RESPONSE)
+
 + Response 500 (application/json)
 
-    Internal Server Error: Returned when Authorization server is experiencing some internal errors
+    Internal Server Error: Returned when Transaction server is experiencing some internal errors
 
-    + Attributes (INTERNAL_SERVER_ERROR_RESPONSE)
+    + Attributes (INTERNAL_SERVER_ERROR_RESPONSE) 
+
 
 ### Open Refund using a Credit Card [POST /refund]
 
@@ -308,12 +522,37 @@ Complete an open refund by providing the card information
 
     + Attributes (TRANSACTION_RESPONSE_WITH_METADATA)
 
++ Response 400 (application/json)
+
+    Bad Request: Returned when the request is missing required information or having incorrect information
+    
+    + Attributes (BAD_REQUEST_RESPONSE)
+
++ Response 401 (application/json)
+
+    Unauthorized: Returned when Authorization header contains an invalid token or invalid client credentials provided
+    
+    + Attributes (UNAUTHORIZED_RESPONSE)
+
++ Response 404 (application/json)
+
+    Not Found:
+    
+    + Attributes (NOT_FOUND_RESPONSE)
+
++ Response 405 (application/json)
+
+    Method Not Allowed: Returned when a NON-POST method is used for the request, e.g GET
+    
+    + Attributes (METHOD_NOT_ALLOWED_RESPONSE)
+
 + Response 500 (application/json)
 
-    Internal Server Error: Returned when Authorization server is experiencing some internal errors
+    Internal Server Error: Returned when Transaction server is experiencing some internal errors
 
-    + Attributes (INTERNAL_SERVER_ERROR_RESPONSE)
+    + Attributes (INTERNAL_SERVER_ERROR_RESPONSE) 
     
+
 ## Transaction [/transaction]
 
 ### Get All Transactions for an Account [GET /transaction{?limit,before,after,from_date,to_date,transaction_status,channel,min_amount,max_amount,email_address,first_name,last_name}]
@@ -358,11 +597,29 @@ Query all transactions for a specific merchant account (in the event you have mo
 
     + Attributes (VALID_TRANSACTION_RESPONSE)
 
++ Response 400 (application/json)
+
+    Bad Request: Returned when the request is missing required information or having incorrect information
+    
+    + Attributes (BAD_REQUEST_RESPONSE)
+
++ Response 401 (application/json)
+
+    Unauthorized: Returned when Authorization header contains an invalid token or invalid client credentials provided
+    
+    + Attributes (UNAUTHORIZED_RESPONSE)
+
++ Response 405 (application/json)
+
+    Method Not Allowed: Returned when a NON-GET method is used for the request, e.g POST
+    
+    + Attributes (METHOD_NOT_ALLOWED_RESPONSE)
+
 + Response 500 (application/json)
 
-    Internal Server Error: Returned when Authorization server is experiencing some internal errors
+    Internal Server Error: Returned when Transaction server is experiencing some internal errors
 
-    + Attributes (INTERNAL_SERVER_ERROR_RESPONSE)
+    + Attributes (INTERNAL_SERVER_ERROR_RESPONSE) 
     
 
 ### Get All Transactions for a Specific User [GET /transaction/user{?limit,before,after,from_date,to_date,transaction_status,channel,min_amount,max_amount,email_address,first_name,last_name}]
@@ -407,11 +664,29 @@ Query all transactions for current merchant filtered by the staff or user ID
 
     + Attributes (VALID_TRANSACTION_RESPONSE)
 
++ Response 400 (application/json)
+
+    Bad Request: Returned when the request is missing required information or having incorrect information
+    
+    + Attributes (BAD_REQUEST_RESPONSE)
+
++ Response 401 (application/json)
+
+    Unauthorized: Returned when Authorization header contains an invalid token or invalid client credentials provided
+    
+    + Attributes (UNAUTHORIZED_RESPONSE)
+
++ Response 405 (application/json)
+
+    Method Not Allowed: Returned when a NON-GET method is used for the request, e.g POST
+    
+    + Attributes (METHOD_NOT_ALLOWED_RESPONSE)
+
 + Response 500 (application/json)
 
-    Internal Server Error: Returned when Authorization server is experiencing some internal errors
+    Internal Server Error: Returned when Transaction server is experiencing some internal errors
 
-    + Attributes (INTERNAL_SERVER_ERROR_RESPONSE)
+    + Attributes (INTERNAL_SERVER_ERROR_RESPONSE) 
 
 
 ### Get Individual Transaction [GET /transaction/{transactionId}]
@@ -430,11 +705,36 @@ Query one transaction by providing the transaction ID
 
     + Attributes (VALID_TRANSACTION_RESPONSE)
 
++ Response 400 (application/json)
+
+    Bad Request: Returned when the request is missing required information or having incorrect information
+    
+    + Attributes (BAD_REQUEST_RESPONSE)
+
++ Response 401 (application/json)
+
+    Unauthorized: Returned when Authorization header contains an invalid token or invalid client credentials provided
+    
+    + Attributes (UNAUTHORIZED_RESPONSE)
+
++ Response 404 (application/json)
+
+    Not Found:
+    
+    + Attributes (NOT_FOUND_RESPONSE)
+
++ Response 405 (application/json)
+
+    Method Not Allowed: Returned when a NON-GET method is used for the request, e.g POST
+    
+    + Attributes (METHOD_NOT_ALLOWED_RESPONSE)
+
 + Response 500 (application/json)
 
-    Internal Server Error: Returned when Authorization server is experiencing some internal errors
+    Internal Server Error: Returned when Transaction server is experiencing some internal errors
 
-    + Attributes (INTERNAL_SERVER_ERROR_RESPONSE)
+    + Attributes (INTERNAL_SERVER_ERROR_RESPONSE) 
+
 
 # Data Structures
 
@@ -494,6 +794,8 @@ Query one transaction by providing the transaction ID
 
 ## TRANSACTION_RESPONSE (object)
 + amount: 10.99 (number, required) - Transaction amount, in dollars, e.g. 10.99 = 10 dollar and 99 cents 
++ `card_type`: `VISA` (string, required) -
++ `card_suffix`: 1111 (number, required) -
 + id: 2992429 (number, required) - 
 + `transaction_id`: NV0B6eZB06 (string, required) - 
 + `transaction_success`: true (boolean, required) - true or false indicate the result of a transaction
@@ -531,7 +833,8 @@ Query one transaction by providing the transaction ID
 
 ## TRANSACTION_RESPONSE_WITH_CARD (object)
 + amount: 10.99 (number, required) - Transaction amount, in dollars, e.g. 10.99 = 10 dollar and 99 cents
-+ id: 2992429 (number, required) - 
++ `card_type`: `VISA` (string, required) -
++ `card_suffix`: 1111 (number, required) -+ id: 2992429 (number, required) - 
 + `transaction_id`: NV0B6eZB06 (string, required) - 
 + `transaction_success`: true (boolean, required) - true or false indicate the result of a transaction
 + `transaction_result`: APPROVED (enum[string], required)  - transaction result
@@ -546,12 +849,11 @@ Query one transaction by providing the transaction ID
 + `first_name`: Brandon (string, optional) -
 + `last_name`: Stark (string, optional) -
 + company: Payfirma (string, optional) - 
-+ `card_type`: OTHER (enum[string], optional) - 
-+ `card_suffix`: 9857 (number, optional) -
 
 ## TRANSACTION_RESPONSE_WITH_METADATA (object)
 + amount: 10.99 (number, required) - TTransaction amount, in dollars, e.g. 10.99 = 10 dollar and 99 cents
-+ id: 2992429 (number, required) - 
++ `card_type`: `VISA` (string, required) -
++ `card_suffix`: 1111 (number, required) -+ id: 2992429 (number, required) - 
 + `transaction_id`: NV0B6eZB06 (string, required) - 
 + `transaction_success`: true (boolean, required) - true or false indicate the result of a transaction
 + `transaction_result`: APPROVED (enum[string], required)  - transaction result
